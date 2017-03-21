@@ -55,6 +55,7 @@
     if ($result->num_rows > 0) {
         // output data of each row
         while($row = $result->fetch_assoc()) {
+            echo "<br> <div style='width:20%; float:left;'>EVENTO: " . $row["Evento"]. "</div><div style='width:20%; float:left;'> DATA: " . $row["data"]. "</div><div style='width:20%; float:left;'> ORA: " . $row["orario"]. "</div><div style='width:40%; float:left;'> LUOGO: " . $row["dove"]."</div>";
             if ($row["speciale"]) {echo "<b> SPECIALE</b>";}
         }
     } else {
