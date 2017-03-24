@@ -10,8 +10,13 @@
     
 </head>
 
-<body style="max-width:500px; margin:0 auto;" class="w3-border w3-border-red">
+<body style="max-width:650px; margin:0 auto;" class="w3-border w3-border-red">
+    
+    
     <?php
+    // set the default timezone to use. Available since PHP 5.1
+    date_default_timezone_set('UTC');
+    
     include 'mieFunzioni.php';
     
     $servername = "localhost";
@@ -27,11 +32,16 @@
     }
     
     
-    $numeroEvento = 3;
+    /*$numeroEvento = 3;
     stampaEventoTest($numeroEvento, $conn);
-    echo "<br>ENZODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOONG<br>";
+    echo "<br>ENZODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOONG<br>";
     $numeroEvento = 15;
-    stampaEventoTest($numeroEvento, $conn);
+    stampaEventoTest($numeroEvento, $conn);*/
+    
+    stampaListaIstanzeEventoTest($conn);
+    
+    
+    
 
 
     

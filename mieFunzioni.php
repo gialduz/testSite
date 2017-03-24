@@ -35,7 +35,7 @@
 
     function stampaPersonaTest($numeroEvento, $conn) { // COLLABORA, REGIA, MUSICA, PRODOTTO DA, etc
         
-       $sql = "SELECT ep.tipologia, P.alt_name AS nick, P.nome, P.cognome FROM ((eventoPersona AS ep INNER JOIN Evento AS E ON E.id = ep.id_evento) INNER JOIN Persona AS P ON P.id = ep.id_persona) WHERE E.id = " . $numeroEvento ." ORDER BY ep.tipologia";
+       $sql = "SELECT ep.tipologia, P.alt_name AS nick, P.nome, P.cognome, P.id FROM ((eventoPersona AS ep INNER JOIN Evento AS E ON E.id = ep.id_evento) INNER JOIN Persona AS P ON P.id = ep.id_persona) WHERE E.id = " . $numeroEvento ." ORDER BY ep.tipologia";
         
         $result = $conn->query($sql);        
         //////// RELAZIONE EVENTO-PERSONA
@@ -45,10 +45,14 @@
             
             
             if( $row["tipologia"] == $ultimaTipologia ){
-                echo ", ". $row["nome"] . " " . $row["cognome"] . " /// " . $row["nick"]. "";
+                //echo ", ". $row["nome"] . " " . $row["cognome"] . " /// " . $row["nick"]. "";
+                echo ", ";
+                stampaNomeTest($row["id"], $conn);
             }else{
                 if($ultimaTipologia != "babbi l'orsetto"){echo "<br>";}
-                echo "<b class='cappato'>" . $row["tipologia"] . ":</b> ". $row["nome"] . " " . $row["cognome"] . " /// " . $row["nick"]. "";
+                echo "<b class='cappato'>" . $row["tipologia"] . ":</b> ";
+                //$row["nome"] . " " . $row["cognome"] . " /// " . $row["nick"]. "";
+                stampaNomeTest($row["id"], $conn);
             }
             
             $ultimaTipologia = $row["tipologia"];
@@ -57,22 +61,22 @@
         
     }
 
-  /*  function stampaNomeTest($id_persona, $conn) { // COLLABORA, REGIA, MUSICA, PRODOTTO DA, etc
+    function stampaNomeTest($id_persona, $conn) { // COLLABORA, REGIA, MUSICA, PRODOTTO DA, etc
         
-       $sql = "SELECT P.nome, P.cognome, P.alt_name AS nick FROM Persona AS P WHERE P.id = " . $id_persona ." ORDER BY ep.tipologia";
+        $sql = "SELECT P.nome, P.cognome, P.alt_name AS nick, P.tipologia FROM Persona AS P WHERE P.id = " . $id_persona;
         
         $result = $conn->query($sql);        
-        //////// RELAZIONE EVENTO-PERSONA
+        $row = $result->fetch_assoc();
         
-        if($row["nick"] != "NULL"){
+        if($row["nick"] != "" && $row["tipologia"] != "persona"){
             echo $row["nick"];
         }else{
-            echo $row["nome"] . $row["cognome"];
+            echo $row["nome"] . " " . $row["cognome"];
         }
             
         
         
-    }  */
+    }  
     
     function stampaTestoTest($numeroEvento, $conn) { // TESTI ITA-ENG
         $sql = "SELECT E.desc_ita AS itaTxt, E.desc_eng AS engTxt FROM Evento AS E WHERE E.id = " . $numeroEvento;
@@ -140,63 +144,200 @@
         echo    "</div>";
     }
     
-    
-
-
-
-
-
-
-
-
-
-
-    /*
-    //TABELLA LUOGO
-    $sql = "SELECT id, nome, tipoVia, via FROM Luogo WHERE 1";
-    $result = $conn->query($sql);
-
-    if ($result->num_rows > 0) {
-        // output data of each row
-        while($row = $result->fetch_assoc()) {
-            echo "id: " . $row["id"]. " - Nome: " . $row["nome"]. " -> " . $row["tipoVia"]. " " .$row["via"] .  "<br>";
-        }
-    } else {
-        echo "0 results";
+    function fasciaEta($numeroEvento, $conn) {
+        $sql = "SELECT E.eta_min AS min, E.eta_max AS max FROM Evento AS E WHERE E.id = " . $numeroEvento;
+        $result = $conn->query($sql);
+        $row = $result->fetch_assoc();
+        return $row["min"] ."-". $row["max"];
     }
-    
-    echo "<br><br>";
-    
-    //TABELLA EVENTO
-    $sql = "SELECT * FROM Evento WHERE 1";
-    $result = $conn->query($sql);
 
-    if ($result->num_rows > 0) {
-        // output data of each row
-        while($row = $result->fetch_assoc()) {
-            echo "id: " . $row["id"]. " - Nome: " . $row["nome"]. " Durata: " . $row["durata"]. " PAGAMENTO: " .$row["ticket"] .  "<br>";
-        }
-    } else {
-        echo "0 results";
-    }
-    
-    
-    //TABELLA istanzeEvento
-    echo "<br><br><h2>EventoLuogoData</h2>";
-    
-    $sqlTabellaIstanzeEventi=   "SELECT E.nome AS Evento, eld.data AS data, eld.orario AS orario, L.nome AS dove, eld.speciale AS speciale FROM ((Evento AS E INNER JOIN eventoLuogoData AS eld ON E.id = eld.id_evento) INNER JOIN Luogo AS L ON L.id = eld.id_luogo)  ORDER BY data, orario, Evento;";
-    
-    $result = $conn->query($sqlTabellaIstanzeEventi);
 
-    if ($result->num_rows > 0) {
-        // output data of each row
-        while($row = $result->fetch_assoc()) {
-            echo "<br> <div style='width:20%; float:left;'>EVENTO: " . $row["Evento"]. "</div><div style='width:20%; float:left;'> DATA: " . $row["data"]. "</div><div style='width:20%; float:left;'> ORA: " . $row["orario"]. "</div><div style='width:40%; float:left;'> LUOGO: " . $row["dove"]."</div>";
-            if ($row["speciale"]) {echo "<b> SPECIALE</b>";}
-        }
-    } else {
-        echo "0 results";
-    }
     
-    */
+
+
+// STAMPA LISTA EVENTI
+//stampa completa
+    function stampaListaIstanzeEventoTest($conn) {
+        //stampaIstanzaEventoTest("qui ci va ciclo id_istanze da 1 a n", $conn);
+        //TABELLA istanzeEvento
+        
+
+        $sqlTabellaIstanzeEventi=   "SELECT E.id, E.nome AS evento, eld.data AS data, eld.orario AS orario, L.nome AS dove, eld.speciale AS speciale FROM ((Evento AS E INNER JOIN eventoLuogoData AS eld ON E.id = eld.id_evento) INNER JOIN Luogo AS L ON L.id = eld.id_luogo)  ORDER BY data, orario, Evento;";
+
+        $result = $conn->query($sqlTabellaIstanzeEventi);
+
+        if ($result->num_rows > 0) {
+            // output data of each row
+            
+            $cacca=0;
+            $ultimaData="pagliaccio baraldi";
+            while($row = $result->fetch_assoc()) {
+                
+                
+                
+                if($cacca%1==0) {
+                    echo "<br><br><br>". "<h2 class='w3-orange w3-center cappato'>" . dataIta($row["data"]) . "</h2>" ;
+                }
+                
+                
+                
+                
+                $stringaDaStampare = ""
+                    ."<div class='w3-row'>" 
+                    
+                        ."<div class='itemFasciaEta w3-center w3-blue'>"
+                            .fasciaEta($row["id"], $conn)
+                        ."</div>"
+                    
+                        ."<div class='itemNomeEvento w3-half'>"
+                            . " " .substr( $row["orario"], 0, 5 )
+                            ." <b>" . $row["evento"] . "</b>"
+                            ." - " . $row["dove"]
+                        ."</div>"
+                    
+                        ."<div class='itemBadge w3-quarter w3-center'>"
+                            .stampaItemBadgeTest($row["id"], $conn)
+                        ."</div>"
+
+                    ."</div>";
+                    
+                    //if ($row["speciale"]) {echo "<b class='w3-purple'> S_TEEN</b>";}
+
+                    echo "<br>";
+                
+                echo $stringaDaStampare;
+                
+                
+                $cacca++;
+                
+            }
+        } else {
+            echo "0 results";
+        }
+    }
+
+
+
+
+
+
+//stampa singolo componente di un ITEM
+    function specialeRagazziItemBadgeTest($numeroEvento, $conn) {
+        $sql = "SELECT E.speciale_ragazzi AS spec FROM Evento AS E WHERE E.id = " . $numeroEvento;
+        $result = $conn->query($sql);
+        $row = $result->fetch_assoc();
+        if($row["spec"]){return "<div class='unQuarto'>"
+                                    ."<div class='w3-purple inclinata' style='width:80%;'> <b>T</b> </div> "
+                                ."</div>";}
+        return "";
+    }
+
+    function stampaItemBadgeTest($numeroEvento, $conn) {
+        $sql = "SELECT E.tipologia, E.durata, E.ticket FROM Evento AS E WHERE E.id = " . $numeroEvento;
+        
+        $result = $conn->query($sql);
+        $row = $result->fetch_assoc();
+        
+        $str =  "<div class='unQuarto w3-blue'>"
+                    .$row["ticket"]
+                ."</div>"
+                ."<div class='unQuarto w3-green'>"
+                    .$row["durata"]
+                ."</div>"
+                ."<div class='unQuarto w3-orange'>"
+                    .substr( $row["tipologia"], 0, 3 )
+                ."</div>";
+        $str .= specialeRagazziItemBadgeTest($numeroEvento, $conn);        
+        return $str;
+        
+        // IMPORTANTE ! nel PDF c'è riferimento a pagina -> badge collegamento o clic su istanza o niente? (clic per dettaglio evento)
+        
+    }
+
+    function giornoIta($giornoEng) {
+
+        switch ($giornoEng) {
+        case "Monday":
+            return "Luned&igrave;";
+            break;
+        case "Tuesday":
+            return "Marted&igrave;";
+            break;
+        case "Wednesday":
+            return "Mercoled&igrave;";
+            break;
+        case "Thursday":
+            return "Gioved&igrave;";
+            break;
+        case "Friday":
+            return "Venerd&igrave;";
+            break;
+        case "Saturday":
+            return "Sabato";
+            break;
+        case "Sunday":
+            return "Domenica";
+            break;
+                
+        default:
+            return $giornoEng;
+            break;
+        }
+        
+    }
+
+    function meseIta($numeroMese) {
+
+        switch ($numeroMese) {
+        case 1:
+            return "Gennaio";
+            break;
+        case 2:
+            return "Febbraio";
+            break;
+        case 3:
+            return "Marzo";
+            break;
+        case 4:
+            return "Aprile";
+            break;
+        case 5:
+            return "Maggio";
+            break;
+        case 6:
+            return "Giugno";
+            break;
+        case 7:
+            return "Luglio";
+            break;
+        case 8:
+            return "Agosto";
+            break;
+        case 9:
+            return "Settembre";
+            break;
+        case 10:
+            return "Ottobre";
+            break;
+        case 11:
+            return "Novembre";
+            break;
+        case 12:
+            return "Dicembre";
+            break;
+        
+                
+        default:
+            return $numeroMese;
+            break;
+        }
+        
+    }
+
+    function dataIta($dataBrutta){
+        
+        return giornoIta(date('l', strtotime($dataBrutta))) ." " . date('j', strtotime($dataBrutta)) . " ". meseIta(date('n', strtotime($dataBrutta)));;
+        
+    }
+
 ?>
