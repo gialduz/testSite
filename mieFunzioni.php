@@ -1,25 +1,24 @@
 <?php
     
     function stampaEventoTest($numeroEvento, $conn) {
-        stampaTitoloTest($numeroEvento, $conn);
-        stampaPersonaTest($numeroEvento, $conn);
-        stampaTestoTest($numeroEvento, $conn);
-        stampaDoveTest($numeroEvento, $conn);
-        stampaQuandoTest($numeroEvento, $conn);
-        stampaBadgeTest($numeroEvento, $conn);
+        return   stampaTitoloTest($numeroEvento, $conn)
+                .stampaPersonaTest($numeroEvento, $conn)
+                .stampaTestoTest($numeroEvento, $conn)
+                .stampaDoveTest($numeroEvento, $conn)
+                .stampaQuandoTest($numeroEvento, $conn)
+                .stampaBadgeTest($numeroEvento, $conn);
     }
 
     function stampaEventoFotoTest($numeroEvento, $conn) {
-        echo "<div class='w3-row'>";
+        return "<div class='w3-row'>"
 
-            echo "<div class='w3-threequarter'>";
-                stampaEventoTest($numeroEvento, $conn);
-            echo "</div>";
-            echo "<div class='w3-quarter w3-black'>"
-                    ."F<br>O<br>T<br>A<br>Z<br>Z<br>A<br><br>M<br>O<br>L<br>T<br>O<br><br>S<br>T<br>R<br>E<br>T<br>T<br>A";
-            echo "</div>";
-        echo "</div>";
-
+            . "<div class='w3-threequarter'>"
+                .stampaEventoTest($numeroEvento, $conn)
+            . "</div>"
+            . "<div class='w3-quarter w3-black'>"
+                    ."F<br>O<br>T<br>A<br>Z<br>Z<br>A<br><br>M<br>O<br>L<br>T<br>O<br><br>S<br>T<br>R<br>E<br>T<br>T<br>A"
+            . "</div>"
+        . "</div>";
     }
         
     
@@ -32,8 +31,7 @@
         $result = $conn->query($sql);        
         $row = $result->fetch_assoc();
         
-        echo        "<div class='w3-center w3-blue'><h1 class='noPad'>" . $row["nome"] . "</h1></div>";
-        verificaSpecialeRagazziTest($numeroEvento, $conn);
+        return "<div class='w3-center w3-blue'><h1 class='noPad'>" . $row["nome"] . "</h1></div>" . verificaSpecialeRagazziTest($numeroEvento, $conn);
 
     }
 
@@ -43,7 +41,7 @@
         
         $result = $conn->query($sql);        
         $row = $result->fetch_assoc();
-        if ($row["speciale_ragazzi"]){echo "<h3 style='color:red;'> SPECIALE RAGAZZI </h3>";}
+        if ($row["speciale_ragazzi"]){return "<h3 style='color:red;'> SPECIALE RAGAZZI </h3>";}
     }
 
     function stampaPersonaTest($numeroEvento, $conn) { // COLLABORA, REGIA, MUSICA, PRODOTTO DA, etc
@@ -53,25 +51,26 @@
         $result = $conn->query($sql);        
         //////// RELAZIONE EVENTO-PERSONA
         
+        $daRitornare="";
+        
         $ultimaTipologia = "babbi l'orsetto";
         while($row = $result->fetch_assoc()) {
             
             
             if( $row["tipologia"] == $ultimaTipologia ){
                 //echo ", ". $row["nome"] . " " . $row["cognome"] . " /// " . $row["nick"]. "";
-                echo ", ";
-                stampaNomeTest($row["id"], $conn);
+                $daRitornare.= ", ". stampaNomeTest($row["id"], $conn);
             }else{
-                if($ultimaTipologia != "babbi l'orsetto"){echo "<br>";}
-                echo "<b class='cappato'>" . $row["tipologia"] . ":</b> ";
+                if($ultimaTipologia != "babbi l'orsetto"){$daRitornare.= "<br>";}
+                $daRitornare.= "<b class='cappato'>" . $row["tipologia"] . ":</b> ";
                 //$row["nome"] . " " . $row["cognome"] . " /// " . $row["nick"]. "";
-                stampaNomeTest($row["id"], $conn);
+                $daRitornare.= stampaNomeTest($row["id"], $conn);
             }
             
             $ultimaTipologia = $row["tipologia"];
             
         }
-        
+        return $daRitornare;
     }
 
     function stampaNomeTest($id_persona, $conn) { // COLLABORA, REGIA, MUSICA, PRODOTTO DA, etc
@@ -82,9 +81,9 @@
         $row = $result->fetch_assoc();
         
         if($row["nick"] != "" && $row["tipologia"] != "persona"){
-            echo $row["nick"];
+            return $row["nick"];
         }else{
-            echo $row["nome"] . " " . $row["cognome"];
+            return $row["nome"] . " " . $row["cognome"];
         }
             
         
@@ -96,12 +95,12 @@
         $result = $conn->query($sql);
         $row = $result->fetch_assoc();
         
-        echo    "<div class='l12 w3-justify'>";
-        echo        "<p>" . $row["itaTxt"] . "</p>";
-        echo    "</div>";
-        echo    "<div class='l12 w3-justify w3-yellow w3-padding-small'>";
-        echo        "<p>" . $row["engTxt"] . "</p>";
-        echo    "</div>";
+        return  "<div class='l12 w3-justify'>"
+                    ."<p>" . $row["itaTxt"] . "</p>"
+                ."</div>"
+                ."<div class='l12 w3-justify w3-yellow w3-padding-small'>"
+                    ."<p>" . $row["engTxt"] . "</p>"
+                ."</div>";
         
     }
     
@@ -111,10 +110,9 @@
         $result = $conn->query($sql);
         $row = $result->fetch_assoc();
         
-        echo    "<div class='l12'>";
-        echo        "<h2> DOVE: " . $row["dove"] . "<h2>";
-        echo    "</div>";
-        echo    "<hr>";
+        return  "<div class='l12'>"
+                    ."<h2> Luogo: " . $row["dove"] . "<h2>"
+                ."</div>";
         
     }
 
@@ -124,13 +122,15 @@
         
         $result = $conn->query($sql);
         
-        echo    "<div class='l12 w3-teal'>";
-        echo        "<p> CALENDARIO - lista istanze eld </p>";
+        $daRitornare="";
+        $daRitornare.=   "<div class='l12 w3-teal'>";
+        $daRitornare.=       "<p> CALENDARIO - lista istanze eld </p>";
         while($row = $result->fetch_assoc()) {
-            echo "<div class='w3-center' style='margin-bottom:-40px'><b>" . dataIta($row["data"]) . " - " . tagliaSec($row["orario"]) . "</b></div> <br><br>";
+            $daRitornare.= "<div class='w3-center' style='margin-bottom:-40px'><b>" . dataIta($row["data"]) . " - " . tagliaSec($row["orario"]) . "</b></div> <br><br>";
         }
         
-        echo    "</div>";
+        $daRitornare.= "</div>";
+        return $daRitornare;
     }
     
     function stampaBadgeTest($numeroEvento, $conn) { // BADGES
@@ -140,23 +140,23 @@
         $result = $conn->query($sql);
         $row = $result->fetch_assoc();
         
-        echo "<div class='w3-center'>";
-        echo    "<div class='unquinto w3-blue'>";
-        echo        "<p>". $row["min"] ." - ". $row["max"] ." </p>";
-        echo    "</div>";
-        echo    "<div class='unquinto w3-orange'>";
-        echo        "<p> ". $row["doveLettera"] ." </p>";
-        echo    "</div>";
-        echo    "<div class='unquinto w3-green'>";
-        echo        "<p>Ticket: ". $row["ticket"] ." </p>";
-        echo    "</div>";
-        echo    "<div class='unquinto w3-purple'>";
-        echo        "<p>Durata: ". $row["durata"] ." </p>";
-        echo    "</div>";
-        echo    "<div class='unquinto w3-cyan'>";
-        echo        "<p>" . $row["tipologia"] ." </p>";
-        echo    "</div>";
-        echo "</div>";
+        return  "<div class='w3-center'>"
+                    ."<div class='unquinto w3-blue'>"
+                        ."<p>". $row["min"] ." - ". $row["max"] ." </p>"
+                    ."</div>"
+                    ."<div class='unquinto w3-orange'>"
+                        ."<p> ". $row["doveLettera"] ." </p>"
+                    ."</div>"
+                    ."<div class='unquinto w3-green'>"
+                        ."<p>Ticket: ". $row["ticket"] ." </p>"
+                    ."</div>"
+                    ."<div class='unquinto w3-purple'>"
+                        ."<p>Durata: ". $row["durata"] ." </p>"
+                    ."</div>"
+                    ."<div class='unquinto w3-cyan'>"
+                        ."<p>" . $row["tipologia"] ." </p>"
+                    ."</div>"
+                 ."</div>";
 
     }
     
