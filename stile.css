@@ -39,3 +39,5 @@
     -o-transform: skew(-20deg, 0deg);
     -moz-transform: skew(-20deg, 0deg);
 }
+
+.noPad{padding: 0px; margin: 0px;}

@@ -32,12 +32,13 @@
     }
     
     
-    /*$numeroEvento = 3;
+    $numeroEvento = 3;
     stampaEventoTest($numeroEvento, $conn);
     echo "<br>ENZODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOONG<br>";
     $numeroEvento = 15;
-    stampaEventoTest($numeroEvento, $conn);*/
-    
+    stampaEventoFotoTest($numeroEvento, $conn);
+    echo "<br>ENZODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOONG<br>";
+
     stampaListaIstanzeEventoTest($conn);
     
     

@@ -8,6 +8,19 @@
         stampaQuandoTest($numeroEvento, $conn);
         stampaBadgeTest($numeroEvento, $conn);
     }
+
+    function stampaEventoFotoTest($numeroEvento, $conn) {
+        echo "<div class='w3-row'>";
+
+            echo "<div class='w3-threequarter'>";
+                stampaEventoTest($numeroEvento, $conn);
+            echo "</div>";
+            echo "<div class='w3-quarter w3-black'>"
+                    ."F<br>O<br>T<br>A<br>Z<br>Z<br>A<br><br>M<br>O<br>L<br>T<br>O<br><br>S<br>T<br>R<br>E<br>T<br>T<br>A";
+            echo "</div>";
+        echo "</div>";
+
+    }
         
     
 
@@ -19,7 +32,7 @@
         $result = $conn->query($sql);        
         $row = $result->fetch_assoc();
         
-        echo        "<h1 class='w3-center w3-blue'>" . $row["nome"] . "</h1>";
+        echo        "<div class='w3-center w3-blue'><h1 class='noPad'>" . $row["nome"] . "</h1></div>";
         verificaSpecialeRagazziTest($numeroEvento, $conn);
 
     }
@@ -114,7 +127,7 @@
         echo    "<div class='l12 w3-teal'>";
         echo        "<p> CALENDARIO - lista istanze eld </p>";
         while($row = $result->fetch_assoc()) {
-            echo "<div class='w3-center' style='margin-bottom:-40px'><b>" . $row["data"] . " --- " . $row["orario"] . "</b></div> <br><br>";
+            echo "<div class='w3-center' style='margin-bottom:-40px'><b>" . dataIta($row["data"]) . " - " . tagliaSec($row["orario"]) . "</b></div> <br><br>";
         }
         
         echo    "</div>";
@@ -127,6 +140,7 @@
         $result = $conn->query($sql);
         $row = $result->fetch_assoc();
         
+        echo "<div class='w3-center'>";
         echo    "<div class='unquinto w3-blue'>";
         echo        "<p>". $row["min"] ." - ". $row["max"] ." </p>";
         echo    "</div>";
@@ -142,6 +156,8 @@
         echo    "<div class='unquinto w3-cyan'>";
         echo        "<p>" . $row["tipologia"] ." </p>";
         echo    "</div>";
+        echo "</div>";
+
     }
     
     function fasciaEta($numeroEvento, $conn) {
@@ -158,39 +174,50 @@
 // STAMPA LISTA EVENTI
 //stampa completa
     function stampaListaIstanzeEventoTest($conn) {
-        //stampaIstanzaEventoTest("qui ci va ciclo id_istanze da 1 a n", $conn);
-        //TABELLA istanzeEvento
         
-
-        $sqlTabellaIstanzeEventi=   "SELECT E.id, E.nome AS evento, eld.data AS data, eld.orario AS orario, L.nome AS dove, eld.speciale AS speciale FROM ((Evento AS E INNER JOIN eventoLuogoData AS eld ON E.id = eld.id_evento) INNER JOIN Luogo AS L ON L.id = eld.id_luogo)  ORDER BY data, orario, Evento;";
+        $sqlTabellaIstanzeEventi = "SELECT E.id, eld.data AS data, eld.orario AS orario FROM Evento AS E INNER JOIN eventoLuogoData AS eld ON E.id = eld.id_evento ORDER BY data, orario, id;";
 
         $result = $conn->query($sqlTabellaIstanzeEventi);
 
         if ($result->num_rows > 0) {
             // output data of each row
             
-            $cacca=0;
-            $ultimaData="pagliaccio baraldi";
-            while($row = $result->fetch_assoc()) {
-                
-                
-                
-                if($cacca%1==0) {
-                    echo "<br><br><br>". "<h2 class='w3-orange w3-center cappato'>" . dataIta($row["data"]) . "</h2>" ;
+            $ultimaData = "pagliaccio baraldi";
+            while($row = $result->fetch_assoc()) {               
+                if($ultimaData != $row["data"]) {
+                    echo "". "<h2 class='w3-orange w3-center cappato'>" . dataIta($row["data"]) . "</h2>" ;
                 }
+                    
+                echo stampaIstanzaEventoTest($row["id"], $conn) . "<br>";
+                $ultimaData = $row["data"];
+            }
+        } else {
+            echo "0 results";
+        }
+    }
+
+
+    // ITEM (ISTANZA)
+    function stampaIstanzaEventoTest($idEvento, $conn) {
+        
+
+        $sql=   "SELECT E.id, E.nome AS evento, eld.data AS data, eld.orario AS orario, L.nome AS dove, eld.speciale AS speciale FROM ((Evento AS E INNER JOIN eventoLuogoData AS eld ON E.id = eld.id_evento) INNER JOIN Luogo AS L ON L.id = eld.id_luogo)  WHERE E.id = " . $idEvento;
+
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            // output data of each row
+            
+            $row = $result->fetch_assoc();
                 
-                
-                
-                
-                $stringaDaStampare = ""
-                    ."<div class='w3-row'>" 
+                return "<div class='w3-row'>" 
                     
                         ."<div class='itemFasciaEta w3-center w3-blue'>"
                             .fasciaEta($row["id"], $conn)
                         ."</div>"
                     
                         ."<div class='itemNomeEvento w3-half'>"
-                            . " " .substr( $row["orario"], 0, 5 )
+                            . "&nbsp;" .tagliaSec($row["orario"])
                             ." <b>" . $row["evento"] . "</b>"
                             ." - " . $row["dove"]
                         ."</div>"
@@ -200,20 +227,11 @@
                         ."</div>"
 
                     ."</div>";
-                    
-                    //if ($row["speciale"]) {echo "<b class='w3-purple'> S_TEEN</b>";}
-
-                    echo "<br>";
-                
-                echo $stringaDaStampare;
-                
-                
-                $cacca++;
-                
+            
+            } else {
+                echo "0 results";
             }
-        } else {
-            echo "0 results";
-        }
+        
     }
 
 
@@ -339,5 +357,7 @@
         return giornoIta(date('l', strtotime($dataBrutta))) ." " . date('j', strtotime($dataBrutta)) . " ". meseIta(date('n', strtotime($dataBrutta)));;
         
     }
+
+    function tagliaSec($ora){ return substr( $ora, 0, 5 );}
 
 ?>
