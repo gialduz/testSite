@@ -39,7 +39,7 @@
     echo stampaEventoFotoTest($numeroEvento, $conn);
     echo "<br>ENZODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOONG<br>";
 
-    stampaListaIstanzeEventoTest($conn);
+    echo stampaListaIstanzeEventoTest($conn);
     
     
     

@@ -1,5 +1,6 @@
 <?php
-    
+
+//DETTAGLIO SINGOLO EVENTO
     function stampaEventoTest($numeroEvento, $conn) {
         return   stampaTitoloTest($numeroEvento, $conn)
                 .stampaPersonaTest($numeroEvento, $conn)
@@ -23,7 +24,7 @@
         
     
 
-
+// componenti dettaglio evento
     function stampaTitoloTest($numeroEvento, $conn) { // stampa "speciale ragazzi" in rosso sotto al titolo
         
         $sql = "SELECT E.nome FROM Evento AS E WHERE E.id = " . $numeroEvento;
@@ -182,20 +183,22 @@
         if ($result->num_rows > 0) {
             // output data of each row
             
+            $daRitornare="";
             $ultimaData = "pagliaccio baraldi";
             while($row = $result->fetch_assoc()) {               
                 if($ultimaData != $row["data"]) {
-                    echo "". "<h2 class='w3-orange w3-center cappato'>" . dataIta($row["data"]) . "</h2>" ;
+                    $daRitornare.= "". "<h2 class='w3-orange w3-center cappato'>" . dataIta($row["data"]) . "</h2>" ;
                 }
                     
-                echo stampaIstanzaEventoTest($row["id"], $conn) . "<br>";
+                $daRitornare.= stampaIstanzaEventoTest($row["id"], $conn) . "<br>";
                 $ultimaData = $row["data"];
             }
         } else {
             echo "0 results";
         }
+        
+        return $daRitornare;
     }
-
 
     // ITEM (ISTANZA)
     function stampaIstanzaEventoTest($idEvento, $conn) {
@@ -233,11 +236,6 @@
             }
         
     }
-
-
-
-
-
 
 //stampa singolo componente di un ITEM
     function specialeRagazziItemBadgeTest($numeroEvento, $conn) {
