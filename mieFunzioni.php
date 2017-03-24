@@ -358,4 +358,40 @@
 
     function tagliaSec($ora){ return substr( $ora, 0, 5 );}
 
+
+// LUOGHI E MAPPE
+    function stampaElencoLuoghi($conn) {
+        $sql = "SELECT L.id_lettera, L.colore, L.nome, L.tipoVia, L.via, L.numero_civico FROM Luogo AS L WHERE 1";
+        $result = $conn->query($sql);
+        
+        
+        
+        /* <div class="w3-row">
+            <div class="w3-col" style="width:150px"><p>150px</p></div>
+            <div class="w3-rest w3-green"><p>rest</p></div>
+        </div>*/
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        $daRitornare="";
+        while($row = $result->fetch_assoc()) {
+            $daRitornare.=  "<div class='w3-row'>"
+                                ."<div class='w3-col w3-". $row["colore"] ." w3-center' style='width:50px'> <h4>" .$row["id_lettera"] . "</h4></div>"
+                                ."<div class='w3-rest'>"."<h4>" . $row["nome"] . "<small>, " . $row["tipoVia"]." " . $row["via"] . " ";
+                
+            if($row["numero_civico"]!=0) {$daRitornare.= $row["numero_civico"];}             
+            $daRitornare.=        "</small> </h4></div>"
+                            ."</div>" . "<br>";
+        }
+        
+        return $daRitornare;
+    }
+
 ?>

@@ -32,21 +32,21 @@
     }
     
     
-    $numeroEvento = 3;
+    /*$numeroEvento = 3;
     echo stampaEventoTest($numeroEvento, $conn);
     echo "<br>ENZODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOONG<br>";
     $numeroEvento = 15;
     echo stampaEventoFotoTest($numeroEvento, $conn);
     echo "<br>ENZODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOONG<br>";
 
-    echo stampaListaIstanzeEventoTest($conn);
+    echo stampaListaIstanzeEventoTest($conn);*/
     
     
-    
+    echo stampaElencoLuoghi($conn);
 
 
     
-    echo "<p class='txtWhite'>Posso dirti che son calmo anche se non lo sono</p> ";
+    echo "<p class='w3-text-white'>Posso dirti che son calmo anche se non lo sono</p> ";
     
     $conn->close();
     ?>
