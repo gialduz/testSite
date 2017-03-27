@@ -43,19 +43,19 @@
     }
     
     
-    /*$numeroEvento = 3;
-    echo stampaEventoTest($numeroEvento, $conn);
-    echo "<br>ENZODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOONG<br>";
+    $numeroEvento = 3;
+    echo stampaEvento($numeroEvento, $conn);
+    /*echo "<br>ENZODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOONG<br>";
     $numeroEvento = 15;
-    echo stampaEventoFotoTest($numeroEvento, $conn);
-    echo "<br>ENZODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOONG<br>";
+    echo stampaEventoFoto($numeroEvento, $conn);
+    echo "<br>ENZODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOONG<br>";*/
 
-    echo stampaListaIstanzeEventoTest($conn);
-    */
+    echo stampaListaIstanzeEvento($conn);
+    
     
     echo stampaMappaLuoghi($conn);
     
-    echo '';
+    echo 'Modello funzionicchia';
     
     
     
