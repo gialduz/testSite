@@ -92,7 +92,7 @@
     }  
     
     function stampaTestoTest($numeroEvento, $conn) { // TESTI ITA-ENG
-        $sql = "SELECT E.desc_ita AS itaTxt, E.desc_eng AS engTxt FROM Evento AS E WHERE E.id = " . $numeroEvento;
+        $sql = "SELECT E.descrizione_ita AS itaTxt, E.descrizione_eng AS engTxt FROM Evento AS E WHERE E.id = " . $numeroEvento;
         $result = $conn->query($sql);
         $row = $result->fetch_assoc();
         
@@ -136,7 +136,7 @@
     
     function stampaBadgeTest($numeroEvento, $conn) { // BADGES
         
-        $sql = "SELECT E.eta_min AS min, E.eta_max AS max, E.ticket, E.durata, E.tipologia, L.id_lettera AS doveLettera FROM ((Evento AS E INNER JOIN eventoLuogoData AS eld ON E.id = eld.id_evento) INNER JOIN Luogo AS L ON L.id = eld.id_luogo) WHERE E.id = " . $numeroEvento;
+        $sql = "SELECT E.eta_min AS min, E.eta_max AS max, E.ticket, E.durata, te.nome AS tipo, L.lettera AS doveLettera FROM (((Evento AS E INNER JOIN eventoLuogoData AS eld ON E.id = eld.id_evento) INNER JOIN Luogo AS L ON L.id = eld.id_luogo) INNER JOIN tipologiaEvento AS te ON E.tipologia = te.id) WHERE E.id = " . $numeroEvento;
         
         $result = $conn->query($sql);
         $row = $result->fetch_assoc();
@@ -155,7 +155,7 @@
                         ."<p>Durata: ". $row["durata"] ." </p>"
                     ."</div>"
                     ."<div class='unquinto w3-cyan'>"
-                        ."<p>" . $row["tipologia"] ." </p>"
+                        ."<p class='uppato'>" . $row["tipo"] ." </p>"
                     ."</div>"
                  ."</div>";
 
@@ -361,35 +361,58 @@
 
 // LUOGHI E MAPPE
     function stampaElencoLuoghi($conn) {
-        $sql = "SELECT L.id_lettera, L.colore, L.nome, L.tipoVia, L.via, L.numero_civico FROM Luogo AS L WHERE 1";
+        $sql = "SELECT L.lettera, L.colore, L.nome, L.tipo_via, L.via, L.numero_civico FROM Luogo AS L WHERE 1";
         $result = $conn->query($sql);
         
-        
-        
-        /* <div class="w3-row">
-            <div class="w3-col" style="width:150px"><p>150px</p></div>
-            <div class="w3-rest w3-green"><p>rest</p></div>
-        </div>*/
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+ 
         $daRitornare="";
         while($row = $result->fetch_assoc()) {
-            $daRitornare.=  "<div class='w3-row'>"
-                                ."<div class='w3-col w3-". $row["colore"] ." w3-center' style='width:50px'> <h4>" .$row["id_lettera"] . "</h4></div>"
-                                ."<div class='w3-rest'>"."<h4>" . $row["nome"] . "<small>, " . $row["tipoVia"]." " . $row["via"] . " ";
+            $daRitornare.=  "<div class='w3-row w3-border'>"
+                                ."<div class='w3-col w3-". $row["colore"] ." w3-center' style='width:50px'> <h4>" .$row["lettera"] . "</h4></div>"
+                                ."<div class='w3-rest w3-container'>"."<h4>" . $row["nome"] . "<small>, " . $row["tipo_via"]." " . $row["via"] . " ";
                 
             if($row["numero_civico"]!=0) {$daRitornare.= $row["numero_civico"];}             
             $daRitornare.=        "</small> </h4></div>"
-                            ."</div>" . "<br>";
+                            ."</div>" . "";
         }
+        
+        return $daRitornare;
+    }
+
+    function stampaMappaLuoghi($conn) {
+        $sql = "SELECT L.lettera, L.colore, L.nome, L.latitudine AS lat, L.longitudine AS lng FROM Luogo AS L WHERE 1";
+        $result = $conn->query($sql);
+        
+ 
+        $daRitornare="";
+        
+        $daRitornare.= '<div id="map" style="height:650px;"></div>
+    
+                        <script>
+                        var map;
+                        function initMap() {
+                            var pos={lat: 45.158428, lng: 10.794230}
+                            map = new google.maps.Map(document.getElementById("map"), {
+                                center: pos,
+                                zoom: 14
+                            });';
+        
+        
+        while($row = $result->fetch_assoc()) {
+           
+            $daRitornare .= 'pos={lat: '.$row["lat"] .', lng: '.$row["lng"].'};'
+                            .'var marker = new google.maps.Marker({
+                                position: pos,
+                                map: map,
+                                title: "'.$row["nome"].'",
+                                label: "'. $row["lettera"] .'",
+                                icon: "img/label/'.$row["colore"].'.jpg"
+                            });';
+        }
+        
+        
+        
+        $daRitornare.= '}</script>' . '<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBn8vMQeMyI3ORo43l8YIRPO2uBYk5kdJc&callback=initMap"> </script>';
         
         return $daRitornare;
     }
