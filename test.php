@@ -50,10 +50,8 @@
     echo stampaEventoFotoTest($numeroEvento, $conn);
     echo "<br>ENZODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOONG<br>";
 
-    echo stampaListaIstanzeEventoTest($conn);*/
-    
-    $numeroEvento = 15;
-    echo stampaEventoFotoTest($numeroEvento, $conn);
+    echo stampaListaIstanzeEventoTest($conn);
+    */
     
     echo stampaMappaLuoghi($conn);
     

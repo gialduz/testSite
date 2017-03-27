@@ -81,9 +81,10 @@
         $result = $conn->query($sql);        
         $row = $result->fetch_assoc();
         
-        if($row["nick"] != "" && $row["tipologia"] != "persona"){
+        if($row["nick"] != "" && $row["tipologia"] != 1){
             return $row["nick"];
         }else{
+            if($row["nick"] != ""){return $row["nome"] . " " . $row["cognome"]. " (".$row["nick"].")";}
             return $row["nome"] . " " . $row["cognome"];
         }
             
