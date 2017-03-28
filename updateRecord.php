@@ -36,7 +36,7 @@
 
 
 
-    $sql = "UPDATE Evento SET nome='".$nome."', durata=".$durata." WHERE id=25";
+    $sql = "UPDATE Evento SET nome='".$nome."', durata=".$durata." WHERE id=25";////////////////////////////////////////////////////////////////
     
     
     if ($conn->query($sql) === TRUE) {
