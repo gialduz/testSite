@@ -22,11 +22,11 @@
             aggiungiRecord()
             <form action="addRecord.php" method="post">
 
-                Nome: <input type="text" name="nome"><br>
-                Durata: <input type="number" name="durata"><br>
-                Tipo: <input type="number" name="tipologia"><br>
-                Età minima: <input type="number" name="eta_min"><br>
-                Età massima: <input type="number" name="eta_max"><br>
+                Nome: <input type="text" name="nome" value="EventoTest"><br>
+                Durata: <input type="number" name="durata" value="1"><br>
+                Tipo: <input type="number" name="tipologia" value="1"><br>
+                Età minima: <input type="number" name="eta_min" value="-1"><br>
+                Età massima: <input type="number" name="eta_max" value="-1"><br>
                 ticket: <input type="number" value="0" min="0" max="1" name="ticket"><br>
                 speciale_ragazzi: <input type="number" value="0" min="0" max="1" name="speciale_ragazzi"><br>
                 <!--descrizioneIta: <input type="text" name="descrizione_ita"><br>
@@ -105,21 +105,27 @@
                 myTableArray.push(arrayOfThisRow);
             }
         });
-
-        alert($(this).closest("tr").find("td:nth-child(1)").text());
+        
+        var daEliminare=$(this).closest("tr").find("td:nth-child(1)").text()
+        
+        var r = confirm("Vuoi davvero cancellare l'evento: " + $(this).closest("tr").find("td:nth-child(2)").text() + "?");
+        if (r == true) {
+            $.ajax({
+                type: "POST",
+                url: "deleteRecord.php",
+                data: { daCancellare: daEliminare }
+            }).done(function() {
+                 //ricarica AJAX
+                location.reload();
+            });    
+        } else {
+            //ricarica AJAX
+                location.reload();
+        }
         
         
         
         
-        
-         $.ajax({
-          type: "POST",
-          url: "deleteRecord.php",
-          data: { daCancellare: 45 }
-        }).done(function() {
-             //alert("$texto");
-          location.reload();
-        });    
 
     });
     </script>
