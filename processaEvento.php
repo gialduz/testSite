@@ -17,8 +17,10 @@
 
 <body style="max-width:1200px; margin:0 auto;" class="w3-border w3-border-red">    
     
+    <div id="r" class="w3-row"></div>
+    
     <div class="w3-row">
-        <div class="w3-third w3-yellow">
+        <div class="w3-half w3-yellow">
             aggiungiRecord()
             <form action="addRecord.php" method="post">
 
@@ -36,29 +38,22 @@
             </form>
         </div>
         
-        <div class="w3-third w3-red">
-            rimuoviRecord()
-            <form action="deleteRecord.php" method="post">
-                id: <input type="number" name="daCancellare"><br>
-            <input type="submit">
-            </form>
-        </div>
 
-        <div class="w3-third w3-cyan">
+        <div id='updateBox' class="w3-half w3-cyan">
             UPDATERecord()
-            <form action="updateRecord.php" method="post">
-                id: <input type="number" name="daAggiornare"><br>
-                Nome: <input type="text" name="nome"><br>
-                Durata: <input type="number" name="durata"><br>
-                Tipo: <input type="number" name="tipologia"><br>
-                Età minima: <input type="number" name="eta_min"><br>
-                Età massima: <input type="number" name="eta_max"><br>
-                ticket: <input type="number" value="0" min="0" max="1" name="ticket"><br>
-                speciale_ragazzi: <input type="number" value="0" min="0" max="1" name="speciale_ragazzi"><br>
+            <form id="updateForm" action="updateRecord.php" method="post">
+                id: <input type="number" name="daAggiornare" id="idEdit"><br>
+                Nome: <input type="text" name="nome" value="EventoTestUPD" id="nomeEdit"><br>
+                Durata: <input type="number" name="durata" value="22" id="durataEdit"><br>
+                Tipo(NON va): <input type="number" name="tipologia" value="4" id="tipoEdit"><br>
+                Età minima: <input type="number" name="eta_min" value="46" id="minEdit"><br>
+                Età massima: <input type="number" name="eta_max" value="46" id="maxEdit"><br>
+                ticket: <input type="number" value="0" min="0" max="1" name="ticket" id="ticketEdit"><br>
+                speciale_ragazzi: <input type="number" value="0" min="0" max="1" name="speciale_ragazzi" id="stEdit"><br>
                 <!--descrizioneIta: <input type="text" name="descrizione_ita"><br>
                 descrizioneEng: <input type="text" name="descrizione_eng"><br>-->
 
-            <input type="submit">
+            <input id="editSubmit" type="submit">
             </form>
         </div>
     </div>
@@ -90,46 +85,8 @@
     ?>
     
     
-    <script>
-        
-    $('.prova').click(function() {
-        
-        
-        var myTableArray = [];
-
-        $("table#tabellaEventi tr").each(function() {
-            var arrayOfThisRow = [];
-            var tableData = $(this).find('td');
-            if (tableData.length > 0) {
-                tableData.each(function() { arrayOfThisRow.push($(this).text()); });
-                myTableArray.push(arrayOfThisRow);
-            }
-        });
-        
-        var daEliminare=$(this).closest("tr").find("td:nth-child(1)").text()
-        
-        var r = confirm("Vuoi davvero cancellare l'evento: " + $(this).closest("tr").find("td:nth-child(2)").text() + "?");
-        if (r == true) {
-            $.ajax({
-                type: "POST",
-                url: "deleteRecord.php",
-                data: { daCancellare: daEliminare }
-            }).done(function() {
-                 //ricarica AJAX
-                location.reload();
-            });    
-        } else {
-            //ricarica AJAX
-                location.reload();
-        }
-        
-        
-        
-        
-
-    });
-    </script>
-    
+    <script src="js/eliminaAjax.js"></script>
+    <script src="js/updateAjax.js"></script>
     
 </body>
 

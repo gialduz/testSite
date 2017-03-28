@@ -23,20 +23,19 @@
         return $data;
     }
     
-    $nome = test_input($_POST["nome"]);
-    $durata = test_input($_POST["durata"]);
-    $tipo = test_input($_POST["tipologia"]);
-    $eta_min = test_input($_POST["eta_min"]);
-    $eta_max = test_input($_POST["eta_max"]);
-    $ticket = test_input($_POST["ticket"]);
-    $speciale_ragazzi = test_input($_POST["speciale_ragazzi"]);
+    //$form= $_POST["arrayValue"];
+    $nome= test_input($_POST["nome"]);
+    $nome= str_replace("'", "''",$nome);
+    $durata= test_input($_POST["durata"]);
+    $tipo= test_input($_POST["tipologia"]);
+    $min= test_input($_POST["eta_min"]);
+    $max= test_input($_POST["eta_max"]);
+    $ticket= test_input($_POST["ticket"]);
+    $speciale_ragazzi=test_input($_POST["speciale_ragazzi"]);
 
 
+    $sql = "UPDATE Evento SET nome='".$nome."', durata=".$durata.", tipologia=".$tipo.", eta_min=".$min.", eta_max=".$max.", ticket=".$ticket.", speciale_ragazzi=".$speciale_ragazzi." WHERE id=50";
 
-
-
-
-    $sql = "UPDATE Evento SET nome='".$nome."', durata=".$durata." WHERE id=25";////////////////////////////////////////////////////////////////
     
     
     if ($conn->query($sql) === TRUE) {
@@ -44,5 +43,5 @@
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
-    header("location: processaEvento.php");
+    //header("location: processaEvento.php");
 ?>
