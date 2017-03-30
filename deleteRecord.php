@@ -15,11 +15,6 @@
         die("Connection failed: " . $conn->connect_error);
     }
 
-
-
-
-
-
     $sql = "DELETE FROM Evento WHERE id=".$_POST["daCancellare"];
     
     

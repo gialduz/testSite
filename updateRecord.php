@@ -2,14 +2,9 @@
 // QUERY ADD NEW RECORD
     // set the default timezone to use. Available since PHP 5.1
     date_default_timezone_set('UTC');
-    
-    $servername = "localhost";
-    $username = "root";
-    $password = "mysql";
-    $dbname = "segni";
 
     // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn = new mysqli("localhost", "root", "mysql", "segni");
     // Check connection
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
@@ -37,7 +32,6 @@
     $speciale_ragazzi= $phpAV[7];
 
     //TIPO DA STRINGA A NUMERO (id di tipologiaEvento)
-    
     switch ($tipo) {
         case "spettacolo":
             $tipo=1;

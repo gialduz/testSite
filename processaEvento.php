@@ -21,21 +21,50 @@
     
     <div id="addBox">
         <div class="w3-yellow w3-row">
-            aggiungiRecord()
+            <h3>Aggiungi evento</h3>
             <form id="addForm">
                 <div class="w3-half">
                     <div class="w3-half">
                         <label>Nome</label>
-                        <input type="text" name="nome" value="EventoTest" class="w3-input w3-border">
+                        <input type="text" name="nome" value="" class="w3-input w3-border">
                     </div>
                     <div class="w3-half">
                         <div class="w3-third">
                             <label>Durata</label>
-                            <input type="number" name="durata" value="1" class="w3-input w3-border">
+                            <input type="number" name="durata" value="" class="w3-input w3-border">
                         </div>
                         <div class="w3-twothird">
-                            <label>Tipo(Non Va)</label>
-                            <input type="number" name="tipologia" value="1" class="w3-input w3-border">
+                            <label>Tipo</label>
+                            <!--<input type="text" name="tipologia" value="" class="w3-input w3-border uppato">-->
+                            <select name="selectTipo" class="w3-select">
+                                
+                            <?php 
+                            date_default_timezone_set('UTC');
+                            $servername = "localhost";
+                            $username = "root";
+                            $password = "mysql";
+                            $dbname = "segni";
+                                
+                            // Create connection
+                            $conn = new mysqli($servername, $username, $password, $dbname);
+                            // Check connection
+                            if ($conn->connect_error) {
+                                die("Connection failed: " . $conn->connect_error);
+                            }
+
+                            $sql = "SELECT nome FROM tipologiaEvento WHERE 1";
+                            $result = $conn->query($sql);   
+
+                            $i=1;
+                            while($row = $result->fetch_assoc()){
+                            echo "<option value=".$i." class='uppato'>" . $row['nome'] . "</option>";
+                            }
+                            
+                            $conn->close();
+                            ?>
+                            </select>
+                            
+                            <!-- WRAP AUTOMATICO SELECT -->
                         </div>
                     </div>
                 </div>
@@ -43,11 +72,11 @@
                     <div class="w3-half">
                         <div class="w3-half">
                             <label>Eta' MIN</label>
-                            <input type="number" name="eta_min" value="-1" style="width: 5em;" class="w3-input w3-border">
+                            <input type="number" name="eta_min" value="0" style="width: 5em;" class="w3-input w3-border">
                         </div>
                         <div class="w3-half">
                             <label>Eta' MAX</label>
-                            <input type="number" name="eta_max" value="-100" style="width: 5em;" class="w3-input w3-border">
+                            <input type="number" name="eta_max" value="0" style="width: 5em;" class="w3-input w3-border">
                         </div>
                     </div>
                     <div class="w3-half">
@@ -70,47 +99,77 @@
 
     <div id='updateBox'>
         <div class="w3-row w3-cyan w3-padding-16">
-            UPDATERecord()
+            <h3>Modifica evento</h3>
             <form id="updateForm">
                 <div class="w3-half">
-                    <div class="w3-quarter">
+                    <div class="w3-col s2">
                         <label>Id</label>
                         <input type="number" name="daAggiornare" id="idEdit" readonly="true" class="w3-input w3-border">
                     </div>
-                    <div class="w3-half">
-                        <label>Nome</label>
-                        <input type="text" name="nome" value="EventoTestUPD" id="nomeEdit" class="w3-input w3-border">
-                    </div>
-                    <div class="w3-quarter">
-                        <label>Durata</label>
-                        <input type="number" name="durata" value="22" id="durataEdit" class="w3-input w3-border">
+                    <div class="w3-col m10">
+                        <div class="w3-threequarter">
+                            <label>Nome</label>
+                            <input type="text" name="nome" id="nomeEdit" class="w3-input w3-border">
+                        </div>
+                        <div class="w3-quarter">
+                            <label>Durata</label>
+                            <input type="number" name="durata" id="durataEdit" class="w3-input w3-border">
+                        </div>
                     </div>
                 </div>
                 <div class="w3-half">
                     <div class="w3-half">
                         <div class="w3-half">
                             <label>Tipo</label>
-                            <input type="text" name="tipologia" value="Non impostato" id="tipoEdit" class="uppato w3-input w3-border">
+                            <select id="tipoEdit" name="selectTipo" class="w3-select">
+                                
+                            <?php 
+                            date_default_timezone_set('UTC');
+                            $servername = "localhost";
+                            $username = "root";
+                            $password = "mysql";
+                            $dbname = "segni";
+                                
+                            // Create connection
+                            $conn = new mysqli($servername, $username, $password, $dbname);
+                            // Check connection
+                            if ($conn->connect_error) {
+                                die("Connection failed: " . $conn->connect_error);
+                            }
+
+                            $sql = "SELECT nome FROM tipologiaEvento WHERE 1";
+                            $result = $conn->query($sql);   
+
+                            $i=1;
+                            while($row = $result->fetch_assoc()){
+                            echo "<option value='".$i."' class='uppato'>" . $row['nome'] . "</option>";
+                            }
+                            
+                            $conn->close();
+                            ?>
+                            </select>
+                            
+                            
                         </div>
                         <div class="w3-half">
                             <div class="w3-half">
                                 <label>Eta' MIN</label>
-                                <input type="number" name="eta_min" value="46" id="minEdit" class="w3-input w3-border">
+                                <input type="number" name="eta_min" id="minEdit" class="w3-input w3-border">
                             </div>
                             <div class="w3-half">
                             <label>Eta' MAX</label>
-                            <input type="number" name="eta_max" value="46" id="maxEdit" class="w3-input w3-border">
+                            <input type="number" name="eta_max" id="maxEdit" class="w3-input w3-border">
                             </div>
                         </div>
                     </div>
                     <div class="w3-quarter">
                         <div class="w3-half">
                             <label>Ticket</label>
-                            <input type="number" value="0" min="0" max="1" name="ticket" id="ticketEdit" class="w3-input w3-border">
+                            <input type="number" min="0" max="1" name="ticket" id="ticketEdit" class="w3-input w3-border">
                         </div>
                         <div class="w3-half">
                             <label>Sp_ragazzi</label>
-                            <input type="number" value="0" min="0" max="1" name="speciale_ragazzi" id="stEdit" class="w3-input w3-border">
+                            <input type="number" min="0" max="1" name="speciale_ragazzi" id="stEdit" class="w3-input w3-border">
                         </div>
                     <!--descrizioneIta: <input type="text" name="descrizione_ita"><br>
                     descrizioneEng: <input type="text" name="descrizione_eng"><br>-->

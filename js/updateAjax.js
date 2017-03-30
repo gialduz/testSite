@@ -1,5 +1,4 @@
-//$("#addBox").hide();
-//$("#updateBox").hide();
+
 arrayTabella= getTableData($("#tabellaEventi")); // matrice tabella
 
 
@@ -26,7 +25,10 @@ $('.editBtn').click(function () {
     $("#idEdit").val(parseInt(arrayTabella[row][0]));
     $("#nomeEdit").val(arrayTabella[row][1]);
     $("#durataEdit").val(parseInt(arrayTabella[row][2]));
-    $("#tipoEdit").val(arrayTabella[row][3]);
+    
+    //$("#tipoEdit").val(arrayTabella[row][3]);
+    $('#tipoEdit').val("2").change();
+    
     $("#minEdit").val(parseInt(arrayTabella[row][4]));
     $('#maxEdit').val(parseInt(arrayTabella[row][5]));
     $('#ticketEdit').val(parseInt(arrayTabella[row][6]));
@@ -61,6 +63,7 @@ $('#editSubmit').click(function () {
         }).done(function() {
              //ricarica AJAX
             location.reload();
+            
         });    
     } else {
         //ricarica AJAX

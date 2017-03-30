@@ -26,7 +26,6 @@
     
     $phpAV = $_POST["arrayValue"];
 
-
     $nome = $phpAV[0];
     $durata = $phpAV[1];
     $tipo = $phpAV[2];
@@ -34,11 +33,24 @@
     $eta_max = $phpAV[4];
     $ticket = $phpAV[5];
     $speciale_ragazzi = $phpAV[6];
-
     
-
-
-
+    //TIPO DA STRINGA A NUMERO (id di tipologiaEvento)
+    switch ($tipo) {
+        case "spettacolo":
+            $tipo=1;
+            break;
+        case "laboratorio":
+            $tipo=2;
+            break;
+        case "formazione":
+            $tipo=3;
+            break;
+        case "film":
+            $tipo=4;
+            break;
+        default:
+            echo "Tipologia non inserita!";
+    }
 
     $sql = "INSERT INTO Evento (id, nome, durata, tipologia, eta_min, eta_max, ticket, speciale_ragazzi, descrizione_ita, descrizione_eng)
     VALUES (NULL, '".$nome."', ".$durata.", ".$tipo.", ".$eta_min.", ".$eta_max.", ".$ticket.", ".$speciale_ragazzi.", 'descrizione di test', 'test description')";
