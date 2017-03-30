@@ -23,17 +23,18 @@
         return $data;
     }
     
-    //$form= $_POST["arrayValue"];
-    $nome= test_input($_POST["nome"]);
-    $nome= str_replace("'", "''",$nome);
-    $durata= test_input($_POST["durata"]);
-    $tipo= test_input($_POST["tipologia"]);
-    $min= test_input($_POST["eta_min"]);
-    $max= test_input($_POST["eta_max"]);
-    $ticket= test_input($_POST["ticket"]);
-    $speciale_ragazzi=test_input($_POST["speciale_ragazzi"]);
+    $phpAV = $_POST["arrayValue"];
 
-    echo $tipo;
+
+    $id= $phpAV[0];
+    $nome= test_input($phpAV[1]);
+    $nome= str_replace("'", "''",$nome);
+    $durata= ($phpAV[2]);
+    $tipo= test_input($phpAV[3]);
+    $min= ($phpAV[4]);
+    $max= ($phpAV[5]);
+    $ticket= ($phpAV[6]);
+    $speciale_ragazzi= $phpAV[7];
 
     //TIPO DA STRINGA A NUMERO (id di tipologiaEvento)
     
@@ -56,7 +57,7 @@
 
 
 
-    $sql = "UPDATE Evento SET nome='".$nome."', durata=".$durata.", tipologia=".$tipo.", eta_min=".$min.", eta_max=".$max.", ticket=".$ticket.", speciale_ragazzi=".$speciale_ragazzi." WHERE id=50";
+    $sql = "UPDATE Evento SET nome='".$nome."', durata=".$durata.", tipologia=".$tipo.", eta_min=".$min.", eta_max=".$max.", ticket=".$ticket.", speciale_ragazzi=".$speciale_ragazzi." WHERE id=".$id;
 
     
     

@@ -19,44 +19,112 @@
     
     <div id="r" class="w3-row"></div>
     
-    <div class="w3-row">
-        <div class="w3-half w3-yellow">
+    <div id="addBox">
+        <div class="w3-yellow w3-row">
             aggiungiRecord()
-            <form action="addRecord.php" method="post">
-
-                Nome: <input type="text" name="nome" value="EventoTest"><br>
-                Durata: <input type="number" name="durata" value="1"><br>
-                Tipo: <input type="number" name="tipologia" value="1"><br>
-                Età minima: <input type="number" name="eta_min" value="-1"><br>
-                Età massima: <input type="number" name="eta_max" value="-1"><br>
-                ticket: <input type="number" value="0" min="0" max="1" name="ticket"><br>
-                speciale_ragazzi: <input type="number" value="0" min="0" max="1" name="speciale_ragazzi"><br>
-                <!--descrizioneIta: <input type="text" name="descrizione_ita"><br>
-                descrizioneEng: <input type="text" name="descrizione_eng"><br>-->
-
-            <input type="submit">
-            </form>
-        </div>
-        
-
-        <div id='updateBox' class="w3-half w3-cyan">
-            UPDATERecord()
-            <form id="updateForm" action="updateRecord.php" method="post">
-                id: <input type="number" name="daAggiornare" id="idEdit"><br>
-                Nome: <input type="text" name="nome" value="EventoTestUPD" id="nomeEdit"><br>
-                Durata: <input type="number" name="durata" value="22" id="durataEdit"><br>
-                Tipo(NON va): <input type="text" name="tipologia" value="Non impostato" id="tipoEdit" class="uppato"><br>
-                Età minima: <input type="number" name="eta_min" value="46" id="minEdit"><br>
-                Età massima: <input type="number" name="eta_max" value="46" id="maxEdit"><br>
-                ticket: <input type="number" value="0" min="0" max="1" name="ticket" id="ticketEdit"><br>
-                speciale_ragazzi: <input type="number" value="0" min="0" max="1" name="speciale_ragazzi" id="stEdit"><br>
-                <!--descrizioneIta: <input type="text" name="descrizione_ita"><br>
-                descrizioneEng: <input type="text" name="descrizione_eng"><br>-->
-
-            <input id="editSubmit" type="submit">
+            <form id="addForm">
+                <div class="w3-half">
+                    <div class="w3-half">
+                        <label>Nome</label>
+                        <input type="text" name="nome" value="EventoTest" class="w3-input w3-border">
+                    </div>
+                    <div class="w3-half">
+                        <div class="w3-third">
+                            <label>Durata</label>
+                            <input type="number" name="durata" value="1" class="w3-input w3-border">
+                        </div>
+                        <div class="w3-twothird">
+                            <label>Tipo(Non Va)</label>
+                            <input type="number" name="tipologia" value="1" class="w3-input w3-border">
+                        </div>
+                    </div>
+                </div>
+                <div class="w3-half">
+                    <div class="w3-half">
+                        <div class="w3-half">
+                            <label>Eta' MIN</label>
+                            <input type="number" name="eta_min" value="-1" style="width: 5em;" class="w3-input w3-border">
+                        </div>
+                        <div class="w3-half">
+                            <label>Eta' MAX</label>
+                            <input type="number" name="eta_max" value="-100" style="width: 5em;" class="w3-input w3-border">
+                        </div>
+                    </div>
+                    <div class="w3-half">
+                        <div class="w3-half">
+                            <label>Ticket</label>
+                            <input type="number" value="0" min="0" max="1" name="ticket" style="width: 3em;" class="w3-input w3-border">
+                        </div>
+                        <div class="w3-half">
+                            <label>Spec_ragazzi</label>
+                            <input type="number" value="0" min="0" max="1" name="speciale_ragazzi" style="width: 3em;" class="w3-input w3-border">
+                        </div>
+                    </div>
+                    <!--descrizioneIta: <input type="text" name="descrizione_ita"><br>
+                    descrizioneEng: <input type="text" name="descrizione_eng"><br>-->
+                </div>
+            <input id="addSubmit" type="button" value="Submit">
             </form>
         </div>
     </div>
+
+    <div id='updateBox'>
+        <div class="w3-row w3-cyan w3-padding-16">
+            UPDATERecord()
+            <form id="updateForm">
+                <div class="w3-half">
+                    <div class="w3-quarter">
+                        <label>Id</label>
+                        <input type="number" name="daAggiornare" id="idEdit" readonly="true" class="w3-input w3-border">
+                    </div>
+                    <div class="w3-half">
+                        <label>Nome</label>
+                        <input type="text" name="nome" value="EventoTestUPD" id="nomeEdit" class="w3-input w3-border">
+                    </div>
+                    <div class="w3-quarter">
+                        <label>Durata</label>
+                        <input type="number" name="durata" value="22" id="durataEdit" class="w3-input w3-border">
+                    </div>
+                </div>
+                <div class="w3-half">
+                    <div class="w3-half">
+                        <div class="w3-half">
+                            <label>Tipo</label>
+                            <input type="text" name="tipologia" value="Non impostato" id="tipoEdit" class="uppato w3-input w3-border">
+                        </div>
+                        <div class="w3-half">
+                            <div class="w3-half">
+                                <label>Eta' MIN</label>
+                                <input type="number" name="eta_min" value="46" id="minEdit" class="w3-input w3-border">
+                            </div>
+                            <div class="w3-half">
+                            <label>Eta' MAX</label>
+                            <input type="number" name="eta_max" value="46" id="maxEdit" class="w3-input w3-border">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w3-quarter">
+                        <div class="w3-half">
+                            <label>Ticket</label>
+                            <input type="number" value="0" min="0" max="1" name="ticket" id="ticketEdit" class="w3-input w3-border">
+                        </div>
+                        <div class="w3-half">
+                            <label>Sp_ragazzi</label>
+                            <input type="number" value="0" min="0" max="1" name="speciale_ragazzi" id="stEdit" class="w3-input w3-border">
+                        </div>
+                    <!--descrizioneIta: <input type="text" name="descrizione_ita"><br>
+                    descrizioneEng: <input type="text" name="descrizione_eng"><br>-->
+                    </div>
+                    <div class="w3-quarter w3-center">
+                        <label></label> <br>
+                        <input id="editSubmit" type="button" value="Conferma">
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
     
     <!-- FINE HTML, inizio PHP -->
     <!-- FINE HTML, inizio PHP -->
@@ -84,9 +152,13 @@
     $conn->close();
     ?>
     
+    <div id="spazioPerFixedUPD" class="w3-center" style="height:250px">Fine</div>
+
     
     <script src="js/eliminaAjax.js"></script>
     <script src="js/updateAjax.js"></script>
+    <script src="js/addAjax.js"></script>
+
     
 </body>
 

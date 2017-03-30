@@ -23,15 +23,19 @@
         return $data;
     }
     
-    $nome = test_input($_POST["nome"]);
-    $durata = test_input($_POST["durata"]);
-    $tipo = test_input($_POST["tipologia"]);
-    $eta_min = test_input($_POST["eta_min"]);
-    $eta_max = test_input($_POST["eta_max"]);
-    $ticket = test_input($_POST["ticket"]);
-    $speciale_ragazzi = test_input($_POST["speciale_ragazzi"]);
+    
+    $phpAV = $_POST["arrayValue"];
 
 
+    $nome = $phpAV[0];
+    $durata = $phpAV[1];
+    $tipo = $phpAV[2];
+    $eta_min = $phpAV[3];
+    $eta_max = $phpAV[4];
+    $ticket = $phpAV[5];
+    $speciale_ragazzi = $phpAV[6];
+
+    
 
 
 
@@ -45,5 +49,5 @@
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
-    header("location: processaEvento.php");
+    //header("location: processaEvento.php");
 ?>
