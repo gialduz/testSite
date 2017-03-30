@@ -45,7 +45,7 @@
                 id: <input type="number" name="daAggiornare" id="idEdit"><br>
                 Nome: <input type="text" name="nome" value="EventoTestUPD" id="nomeEdit"><br>
                 Durata: <input type="number" name="durata" value="22" id="durataEdit"><br>
-                Tipo(NON va): <input type="number" name="tipologia" value="4" id="tipoEdit"><br>
+                Tipo(NON va): <input type="text" name="tipologia" value="Non impostato" id="tipoEdit" class="uppato"><br>
                 Età minima: <input type="number" name="eta_min" value="46" id="minEdit"><br>
                 Età massima: <input type="number" name="eta_max" value="46" id="maxEdit"><br>
                 ticket: <input type="number" value="0" min="0" max="1" name="ticket" id="ticketEdit"><br>

@@ -33,6 +33,28 @@
     $ticket= test_input($_POST["ticket"]);
     $speciale_ragazzi=test_input($_POST["speciale_ragazzi"]);
 
+    echo $tipo;
+
+    //TIPO DA STRINGA A NUMERO (id di tipologiaEvento)
+    
+    switch ($tipo) {
+        case "spettacolo":
+            $tipo=1;
+            break;
+        case "laboratorio":
+            $tipo=2;
+            break;
+        case "formazione":
+            $tipo=3;
+            break;
+        case "film":
+            $tipo=4;
+            break;
+        default:
+            echo "Tipologia non inserita!";
+    }
+
+
 
     $sql = "UPDATE Evento SET nome='".$nome."', durata=".$durata.", tipologia=".$tipo.", eta_min=".$min.", eta_max=".$max.", ticket=".$ticket.", speciale_ragazzi=".$speciale_ragazzi." WHERE id=50";
 
