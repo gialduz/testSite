@@ -7,7 +7,7 @@
     <meta name="viewport" content="initial-scale=1.0">
     <!--<meta charset="utf-8">-->
     
-    <title>tabella luogo</title>
+    <title>tabella DETTAGLIO Evento</title>
     
     <link rel="stylesheet" href="../css/w3.css">
     <link rel="stylesheet" href="../css/stile.css">
@@ -54,7 +54,7 @@
     <script>
         $( "#sceltaEvento" ).change(function() {
             alert( "Handler for .change() called." );
-            $("#wrapEvento").load("../test.php");
+            //$("#wrapEvento").load("../test.php");
         });</script>
     
     

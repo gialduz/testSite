@@ -47,7 +47,7 @@
 .resp{width: 100%; height: auto;}
 
 
-#updateBox{position: fixed; max-width: 1200px; bottom: 0px;}
+#updateBox, #editBox{position: fixed; max-width: 1200px; bottom: 0px;}
 
 th, td{
     box-shadow: inset 1px 1px 1px #000;

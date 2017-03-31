@@ -17,7 +17,10 @@
 
 <body style="max-width:1200px; margin:0 auto;" class="w3-border w3-border-red">    
     
-    <a href="../amministrazione.html"><div class="w3-row w3-center w3-jumbo w3-hover-cyan"> Home Amministrazione</div></a>
+    <div class="w3-row">
+        <a href="../amministrazione.html"><div class="w3-half w3-center w3-jumbo w3-hover-cyan"> Home ADMIN</div></a>
+        <div class="w3-half w3-center w3-xxlarge w3-red"> Stai modificando gli EVENTI</div>
+    </div>  
     
     <div id="addBox">
         <div class="w3-yellow w3-row">
@@ -193,7 +196,7 @@
     
     <?php
     
-    include 'stampaEventi.php';
+    include 'stampaEventiLuoghi.php';
 
     // set the default timezone to use. Available since PHP 5.1
     date_default_timezone_set('UTC');
