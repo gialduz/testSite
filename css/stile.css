@@ -53,5 +53,6 @@ th, td{
     box-shadow: inset 1px 1px 1px #000;
     -webkit-box-shadow: inset 1px 1px 1px #000;
     -moz-box-shadow: inset 1px 1px 1px #000;
-    -o-box-shadow: inset 1px 1px 1px #000;ù
+    -o-box-shadow: inset 1px 1px 1px #000;
+    padding:8px 4px 8px 4px;
 }

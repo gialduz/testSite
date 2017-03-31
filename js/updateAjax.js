@@ -25,10 +25,8 @@ $('.editBtn').click(function () {
     $("#idEdit").val(parseInt(arrayTabella[row][0]));
     $("#nomeEdit").val(arrayTabella[row][1]);
     $("#durataEdit").val(parseInt(arrayTabella[row][2]));
-    
-    //$("#tipoEdit").val(arrayTabella[row][3]);
-    $('#tipoEdit').val("2").change();
-    
+    var tipoId = arrayTabella[row][3].split('#')[1];//[1] alla fine perche crea un array con le 2 parti.. io tengo la seconda
+    $('#tipoEdit').val(tipoId);
     $("#minEdit").val(parseInt(arrayTabella[row][4]));
     $('#maxEdit').val(parseInt(arrayTabella[row][5]));
     $('#ticketEdit').val(parseInt(arrayTabella[row][6]));
@@ -58,7 +56,7 @@ $('#editSubmit').click(function () {
     if (popupVerifica == true) {
         $.ajax({
             type: "POST",
-            url: "updateRecord.php",
+            url: "../php/updateRecord.php",
             data: { arrayValue: arrayValue }
         }).done(function() {
              //ricarica AJAX

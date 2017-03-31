@@ -19,13 +19,9 @@ $('#addSubmit').click(function () {
     var popupVerifica = confirm("Vuoi davvero AGGIUNGERE l'evento: " + arrayValue[0] + "?");
     
     if (popupVerifica == true) {
-        /*alert(arrayName);
-        alert(arrayValue);*/
-
-
         $.ajax({
             type: "POST",
-            url: "addRecord.php",
+            url: "../php/addRecord.php",
             data: { arrayValue: arrayValue }
         }).done(function() {
              //ricarica AJAX
@@ -33,6 +29,6 @@ $('#addSubmit').click(function () {
         });    
     } else {
         //ricarica AJAX
-            location.reload();
+        location.reload();
     }
 });

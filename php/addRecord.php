@@ -2,9 +2,14 @@
 // QUERY ADD NEW RECORD
     // set the default timezone to use. Available since PHP 5.1
     date_default_timezone_set('UTC');
+    
+    $servername = "localhost";
+    $username = "root";
+    $password = "mysql";
+    $dbname = "segni";
 
     // Create connection
-    $conn = new mysqli("localhost", "root", "mysql", "segni");
+    $conn = new mysqli($servername, $username, $password, $dbname);
     // Check connection
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
@@ -18,21 +23,20 @@
         return $data;
     }
     
+    
     $phpAV = $_POST["arrayValue"];
 
-
-    $id= $phpAV[0];
-    $nome= test_input($phpAV[1]);
+    $nome= test_input($phpAV[0]);
     $nome= str_replace("'", "''",$nome);
-    $durata= ($phpAV[2]);
-    $tipo= test_input($phpAV[3]);
-    $min= ($phpAV[4]);
-    $max= ($phpAV[5]);
-    $ticket= ($phpAV[6]);
-    $speciale_ragazzi= $phpAV[7];
-
+    $durata = $phpAV[1];
+    $tipo = $phpAV[2];
+    $eta_min = $phpAV[3];
+    $eta_max = $phpAV[4];
+    $ticket = $phpAV[5];
+    $speciale_ragazzi = $phpAV[6];
+    
     //TIPO DA STRINGA A NUMERO (id di tipologiaEvento)
-    switch ($tipo) {
+    /*switch ($tipo) {
         case "spettacolo":
             $tipo=1;
             break;
@@ -47,12 +51,10 @@
             break;
         default:
             echo "Tipologia non inserita!";
-    }
+    }*/
 
-
-
-    $sql = "UPDATE Evento SET nome='".$nome."', durata=".$durata.", tipologia=".$tipo.", eta_min=".$min.", eta_max=".$max.", ticket=".$ticket.", speciale_ragazzi=".$speciale_ragazzi." WHERE id=".$id;
-
+    $sql = "INSERT INTO Evento (id, nome, durata, tipologia, eta_min, eta_max, ticket, speciale_ragazzi, descrizione_ita, descrizione_eng)
+    VALUES (NULL, '".$nome."', ".$durata.", ".$tipo.", ".$eta_min.", ".$eta_max.", ".$ticket.", ".$speciale_ragazzi.", 'descrizione di test', 'test description')";
     
     
     if ($conn->query($sql) === TRUE) {

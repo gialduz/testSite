@@ -5,7 +5,7 @@ $('.delBtn').click(function() {
         if (popupVerifica == true) {
             $.ajax({
                 type: "POST",
-                url: "deleteRecord.php",
+                url: "../php/deleteRecord.php",
                 data: { daCancellare: daEliminare }
             }).done(function() {
                  //ricarica AJAX

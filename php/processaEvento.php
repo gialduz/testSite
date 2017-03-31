@@ -10,14 +10,14 @@
     
     <title>tabella evento</title>
     
-    <link rel="stylesheet" href="css/w3.css">
-    <link rel="stylesheet" href="css/stile.css">
-    <script src="js/jquery.js"></script>
+    <link rel="stylesheet" href="../css/w3.css">
+    <link rel="stylesheet" href="../css/stile.css">
+    <script src="../js/jquery.js"></script>
 </head>
 
 <body style="max-width:1200px; margin:0 auto;" class="w3-border w3-border-red">    
     
-    <div id="r" class="w3-row"></div>
+    <a href="../amministrazione.html"><div class="w3-row w3-center w3-jumbo w3-hover-cyan"> Home Amministrazione</div></a>
     
     <div id="addBox">
         <div class="w3-yellow w3-row">
@@ -36,8 +36,8 @@
                         <div class="w3-twothird">
                             <label>Tipo</label>
                             <!--<input type="text" name="tipologia" value="" class="w3-input w3-border uppato">-->
-                            <select name="selectTipo" class="w3-select">
-                                
+                            <select id="addTipo" name="selectTipo" class="w3-select">
+                                <option value='0'> - </option>
                             <?php 
                             date_default_timezone_set('UTC');
                             $servername = "localhost";
@@ -52,12 +52,13 @@
                                 die("Connection failed: " . $conn->connect_error);
                             }
 
-                            $sql = "SELECT nome FROM tipologiaEvento WHERE 1";
+                            $sql = "SELECT id, nome FROM tipologiaEvento WHERE 1";
                             $result = $conn->query($sql);   
 
                             $i=1;
                             while($row = $result->fetch_assoc()){
-                            echo "<option value=".$i." class='uppato'>" . $row['nome'] . "</option>";
+                                echo "<option value=".$row[id]." class='uppato'>" . $row['nome'] . "</option>";
+                                $i++;
                             }
                             
                             $conn->close();
@@ -122,6 +123,7 @@
                         <div class="w3-half">
                             <label>Tipo</label>
                             <select id="tipoEdit" name="selectTipo" class="w3-select">
+                                <option value='0'> - </option>
                                 
                             <?php 
                             date_default_timezone_set('UTC');
@@ -137,12 +139,12 @@
                                 die("Connection failed: " . $conn->connect_error);
                             }
 
-                            $sql = "SELECT nome FROM tipologiaEvento WHERE 1";
+                            $sql = "SELECT id, nome FROM tipologiaEvento WHERE 1";
                             $result = $conn->query($sql);   
 
                             $i=1;
                             while($row = $result->fetch_assoc()){
-                            echo "<option value='".$i."' class='uppato'>" . $row['nome'] . "</option>";
+                            echo "<option value='".$row["id"]."' class='uppato'>" . $row['nome'] . "</option>";
                             }
                             
                             $conn->close();
@@ -214,9 +216,11 @@
     <div id="spazioPerFixedUPD" class="w3-center" style="height:250px">Fine</div>
 
     
-    <script src="js/eliminaAjax.js"></script>
-    <script src="js/updateAjax.js"></script>
-    <script src="js/addAjax.js"></script>
+    <script src="../js/eliminaAjax.js"></script>
+    <script src="../js/updateAjax.js"></script>
+    <script src="../js/addAjax.js"></script>
+    <script src="../js/formReset.js"></script>
+
 
     
 </body>
